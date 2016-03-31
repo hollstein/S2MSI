@@ -3,5 +3,5 @@ _static
 _templates 
 
 
-.idea/*
+.idea/
 *.pyc
