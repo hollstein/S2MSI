@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>S2MSI package &mdash; S2MSI 2016.01.25 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2016.01.25',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="S2MSI 2016.01.25 documentation" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="s2msi-package">
+<h1>S2MSI package<a class="headerlink" href="#s2msi-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="S2MSI.ClassicalBayesian.html">S2MSI.ClassicalBayesian package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="S2MSI.ClassicalBayesian.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="S2MSI.ClassicalBayesian.html#module-S2MSI.ClassicalBayesian.ClassicalBayesian">S2MSI.ClassicalBayesian.ClassicalBayesian module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="S2MSI.ClassicalBayesian.html#module-S2MSI.ClassicalBayesian">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="S2MSI.GranuleDEM.html">S2MSI.GranuleDEM package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="S2MSI.GranuleDEM.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="S2MSI.GranuleDEM.html#module-S2MSI.GranuleDEM.GranuleDEM">S2MSI.GranuleDEM.GranuleDEM module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="S2MSI.GranuleDEM.html#module-S2MSI.GranuleDEM">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="S2MSI.GranuleInfo.html">S2MSI.GranuleInfo package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="S2MSI.GranuleInfo.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="S2MSI.GranuleInfo.html#module-S2MSI.GranuleInfo.GranuleInfo">S2MSI.GranuleInfo.GranuleInfo module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="S2MSI.GranuleInfo.html#module-S2MSI.GranuleInfo">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="S2MSI.Image.html">S2MSI.Image package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="S2MSI.Image.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="S2MSI.Image.html#module-S2MSI.Image.Image">S2MSI.Image.Image module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="S2MSI.Image.html#module-S2MSI.Image">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="module-S2MSI">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-S2MSI" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="S2MSI.GranuleInfo">
+<em class="property">class </em><code class="descclassname">S2MSI.</code><code class="descname">GranuleInfo</code><span class="sig-paren">(</span><em>version='lite'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/S2MSI/GranuleInfo/GranuleInfo.html#GranuleInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.GranuleInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dict</span></code></p>
+<p>Dict like object with basic information&#8217;s about Sentinel2-MSI granules.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>version</strong> (<em>string with granule name, see keys() method for available names</em>) &#8211; should be either &#8220;lite&#8221; or &#8220;full&#8221;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict like object, keys are S2 ganule names (e.g. &#8216;32UVX&#8217;), data can be accessed via () and [] methods</td>
+</tr>
+</tbody>
+</table>
+<p>:Example</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">S2MSI</span> <span class="kn">import</span> <span class="n">GranuleInfo</span> <span class="k">as</span> <span class="n">GranuleInfo</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">S2gi</span> <span class="o">=</span> <span class="n">GranuleInfo</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s">&quot;full&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">S2gi</span><span class="p">[</span><span class="s">&quot;32UPV&quot;</span><span class="p">]</span>
+<span class="go">    {u&#39;country&#39;: [u&#39;Germany&#39;],</span>
+<span class="go">     u&#39;epsg&#39;: 32632,</span>
+<span class="go">     u&#39;name&#39;: u&#39;32UPV&#39;,</span>
+<span class="go">     u&#39;pos&#39;: {u&#39;ll&#39;: {u&#39;lat&#39;: 48.6570271781,</span>
+<span class="go">       u&#39;lon&#39;: 10.3579107698,</span>
+<span class="go">       u&#39;x&#39;: 599999.9999970878,</span>
+<span class="go">       u&#39;y&#39;: 5390220.000326163},</span>
+<span class="go">      u&#39;lr&#39;: {u&#39;lat&#39;: 48.6298215752,</span>
+<span class="go">       u&#39;lon&#39;: 11.8474784519,</span>
+<span class="go">       u&#39;x&#39;: 709800.0000132157,</span>
+<span class="go">       u&#39;y&#39;: 5390220.000321694},</span>
+<span class="go">      u&#39;tl&#39;: {u&#39;lat&#39;: 49.644436702,</span>
+<span class="go">       u&#39;lon&#39;: 10.3851737332,</span>
+<span class="go">       u&#39;x&#39;: 600000.0000025682,</span>
+<span class="go">       u&#39;y&#39;: 5500020.000361709},</span>
+<span class="go">      u&#39;tr&#39;: {u&#39;lat&#39;: 49.6162737214,</span>
+<span class="go">       u&#39;lon&#39;: 11.9045727629,</span>
+<span class="go">       u&#39;x&#39;: 709800.0000165974,</span>
+<span class="go">       u&#39;y&#39;: 5500020.000351718}},</span>
+<span class="go">     u&#39;region&#39;: [u&#39;Europe&#39;],</span>
+<span class="go">     u&#39;zone&#39;: 32}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="S2MSI.Image">
+<em class="property">class </em><code class="descclassname">S2MSI.</code><code class="descname">Image</code><span class="sig-paren">(</span><em>S2_MSI_granule_path</em>, <em>import_bands='all'</em>, <em>namespace='https://psd-12.sentinel2.eo.esa.int/PSD/S2_PDI_Level-1C_Tile_Metadata.xsd'</em>, <em>target_resolution=20.0</em>, <em>numpy_type=&lt;class 'numpy.float16'&gt;</em>, <em>unit='reflectance'</em>, <em>interpolation_order=1</em>, <em>data_mode='dense'</em>, <em>driver='OpenJpeg2000'</em>, <em>call_cmd=None</em>, <em>aux_fields=None</em>, <em>logger=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/S2MSI/Image/Image.html#Image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.Image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Reads Sentinel-2 MSI data into numpy array. Images for different channels are resampled to a common sampling
+:param S2_MSI_granule_path: path to granule folder, folder should contain IMG_DATA folder and S2A_[..].xml file
+:param import_bands: list of bands to import, default: [&#8216;B01&#8217;, &#8216;B02&#8217;, &#8216;B03&#8217;, &#8216;B04&#8217;, &#8216;B05&#8217;, &#8216;B06&#8217;, &#8216;B07&#8217;, &#8216;B08&#8217;,</p>
+<blockquote>
+<div>&#8216;B8A&#8217;, &#8216;B09&#8217;, &#8216;B10&#8217;, &#8216;B11&#8217;, &#8216;B12&#8217;,]</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>namespace</strong> &#8211; for XML file</li>
+<li><strong>target_resolution</strong> &#8211; spatial resolution in meter, or &#8220;none&#8221; for data not interpolated</li>
+<li><strong>numpy_type</strong> &#8211; type for result</li>
+<li><strong>interpolation_order</strong> &#8211; integer for interpolation 1,2,3</li>
+<li><strong>data_mode</strong> &#8211; either &#8220;dense&#8221; or &#8220;sparse&#8221;</li>
+<li><strong>aux_fields</strong> &#8211; either None or list auf to be loaded aus fields, e.g. [&#8220;cwv&#8221;,&#8221;spr&#8221;,&#8221;ozo&#8221;]</li>
+<li><strong>driver</strong> &#8211; should be &#8220;OpenJpeg2000&#8221; -&gt; glymur, &#8220;kdu_expand&#8221;-&gt;shell command, &#8220;gdal_[driver] e.g. gdal_JP2ECW
+gdal_JPEG2000, gdal_JP2OpenJPEG</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="S2MSI.Image.S2_image_to_rgb">
+<code class="descname">S2_image_to_rgb</code><span class="sig-paren">(</span><em>rgb_bands=('B11'</em>, <em>'B08'</em>, <em>'B03')</em>, <em>rgb_gamma=(1.0</em>, <em>1.0</em>, <em>1.0)</em>, <em>pixel_dd_hist=20</em>, <em>pixel_dd=1</em>, <em>hist_chop_off=0.01</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/S2MSI/Image/Image.html#Image.S2_image_to_rgb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.Image.S2_image_to_rgb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="S2MSI.Image.find_in_xml">
+<em class="property">static </em><code class="descname">find_in_xml</code><span class="sig-paren">(</span><em>xml</em>, <em>*branch</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/S2MSI/Image/Image.html#Image.find_in_xml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.Image.find_in_xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>S2 xml helper function
+:param xml: xml object
+:param branch: iterate to branches using find
+:return: xml object, None if nothing was found</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="S2MSI.Image.find_in_xml_root">
+<em class="property">static </em><code class="descname">find_in_xml_root</code><span class="sig-paren">(</span><em>namespace</em>, <em>xml_root</em>, <em>branch</em>, <em>*branches</em>, <em>findall=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/S2MSI/Image/Image.html#Image.find_in_xml_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.Image.find_in_xml_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>S2 xml helper function, search from root
+:param namespace:
+:param xml_root:
+:param branch: first branch, is combined with namespace
+:param branches: repeated find&#8217;s along these parameters
+:param findall: if given, at final a findall
+:return: found xml object, None if nothing was found</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="S2MSI.Image.gdal_read">
+<em class="property">static </em><code class="descname">gdal_read</code><span class="sig-paren">(</span><em>fnjp</em>, <em>driver_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/S2MSI/Image/Image.html#Image.gdal_read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.Image.gdal_read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="S2MSI.Image.get_values_from_xml">
+<em class="property">static </em><code class="descname">get_values_from_xml</code><span class="sig-paren">(</span><em>leaf</em>, <em>dtype=&lt;class 'float'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/S2MSI/Image/Image.html#Image.get_values_from_xml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.Image.get_values_from_xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>S2 xml helper function
+:param leaf: xml object which is searched for VALUES tag which are then composed into a numpy array
+:param dtype: dtype of returned numpy array
+:return: numpy array</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="S2MSI.Image.parse_S2_granule_xml">
+<em class="property">static </em><code class="descname">parse_S2_granule_xml</code><span class="sig-paren">(</span><em>fn</em>, <em>namespace</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/S2MSI/Image/Image.html#Image.parse_S2_granule_xml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.Image.parse_S2_granule_xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>parse XML file in gernule folder and return metadata
+:param fn: full filename ti xml file
+:param namespace: xml namespace
+:return: dictionary with metadata</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="S2MSI.Image.parse_S2_product_xml">
+<em class="property">static </em><code class="descname">parse_S2_product_xml</code><span class="sig-paren">(</span><em>fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/S2MSI/Image/Image.html#Image.parse_S2_product_xml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.Image.parse_S2_product_xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>S2 XML helper function to parse product xml file
+:param fn: file name of xml file
+:return: metadata dictionary</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="S2MSI.Image.read_aux_data">
+<em class="property">static </em><code class="descname">read_aux_data</code><span class="sig-paren">(</span><em>fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/S2MSI/Image/Image.html#Image.read_aux_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.Image.read_aux_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read grib file with aux data, return dictionary
+:param fn: path to granule
+:return: dict with data</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="S2MSI.Image.save_rgb_image">
+<em class="property">static </em><code class="descname">save_rgb_image</code><span class="sig-paren">(</span><em>rgb_img</em>, <em>fn</em>, <em>dpi=100.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/S2MSI/Image/Image.html#Image.save_rgb_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.Image.save_rgb_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="S2MSI.GranuleDEM">
+<em class="property">class </em><code class="descclassname">S2MSI.</code><code class="descname">GranuleDEM</code><span class="sig-paren">(</span><em>fn</em>, <em>driver='glymur'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/S2MSI/GranuleDEM/GranuleDEM.html#GranuleDEM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.GranuleDEM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>get digital elevation models for S2 MSI Granules from archive</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fn</strong> (<em>string</em>) &#8211; filename of DEM archive</li>
+<li><strong>driver</strong> (<em>string</em>) &#8211; name of the method to read from the archive, currently &#8220;glymur&#8221; is implemented</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dict like object which returns DEM for given granules if get_dem, [],or () are called</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="S2MSI.GranuleDEM.get_dem">
+<code class="descname">get_dem</code><span class="sig-paren">(</span><em>tile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/S2MSI/GranuleDEM/GranuleDEM.html#GranuleDEM.get_dem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.GranuleDEM.get_dem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read DEM tile from the archive</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tile</strong> &#8211; tilename, e.g. &#8220;32UPC&#8221;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">numpy array with DEM data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="S2MSI.ClassicalBayesian">
+<em class="property">class </em><code class="descclassname">S2MSI.</code><code class="descname">ClassicalBayesian</code><a class="reference internal" href="_modules/S2MSI/ClassicalBayesian/ClassicalBayesian.html#ClassicalBayesian"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.ClassicalBayesian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Classical Bayesian classification for Sentinel 2</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">S2MSI package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#module-S2MSI">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/S2MSI.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, André Hollstein.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/S2MSI.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

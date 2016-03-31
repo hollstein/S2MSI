@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>S2MSI.GranuleDEM package &mdash; S2MSI 2016.01.25 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2016.01.25',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="S2MSI 2016.01.25 documentation" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="s2msi-granuledem-package">
+<h1>S2MSI.GranuleDEM package<a class="headerlink" href="#s2msi-granuledem-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-S2MSI.GranuleDEM.GranuleDEM">
+<span id="s2msi-granuledem-granuledem-module"></span><h2>S2MSI.GranuleDEM.GranuleDEM module<a class="headerlink" href="#module-S2MSI.GranuleDEM.GranuleDEM" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="S2MSI.GranuleDEM.GranuleDEM.GranuleDEM">
+<em class="property">class </em><code class="descclassname">S2MSI.GranuleDEM.GranuleDEM.</code><code class="descname">GranuleDEM</code><span class="sig-paren">(</span><em>fn</em>, <em>driver='glymur'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/S2MSI/GranuleDEM/GranuleDEM.html#GranuleDEM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.GranuleDEM.GranuleDEM.GranuleDEM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>get digital elevation models for S2 MSI Granules from archive</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fn</strong> (<em>string</em>) &#8211; filename of DEM archive</li>
+<li><strong>driver</strong> (<em>string</em>) &#8211; name of the method to read from the archive, currently &#8220;glymur&#8221; is implemented</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dict like object which returns DEM for given granules if get_dem, [],or () are called</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="S2MSI.GranuleDEM.GranuleDEM.GranuleDEM.get_dem">
+<code class="descname">get_dem</code><span class="sig-paren">(</span><em>tile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/S2MSI/GranuleDEM/GranuleDEM.html#GranuleDEM.get_dem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.GranuleDEM.GranuleDEM.GranuleDEM.get_dem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read DEM tile from the archive</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tile</strong> &#8211; tilename, e.g. &#8220;32UPC&#8221;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">numpy array with DEM data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-S2MSI.GranuleDEM">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-S2MSI.GranuleDEM" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="S2MSI.GranuleDEM.GranuleDEM">
+<em class="property">class </em><code class="descclassname">S2MSI.GranuleDEM.</code><code class="descname">GranuleDEM</code><span class="sig-paren">(</span><em>fn</em>, <em>driver='glymur'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/S2MSI/GranuleDEM/GranuleDEM.html#GranuleDEM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.GranuleDEM.GranuleDEM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>get digital elevation models for S2 MSI Granules from archive</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fn</strong> (<em>string</em>) &#8211; filename of DEM archive</li>
+<li><strong>driver</strong> (<em>string</em>) &#8211; name of the method to read from the archive, currently &#8220;glymur&#8221; is implemented</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dict like object which returns DEM for given granules if get_dem, [],or () are called</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="S2MSI.GranuleDEM.GranuleDEM.get_dem">
+<code class="descname">get_dem</code><span class="sig-paren">(</span><em>tile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/S2MSI/GranuleDEM/GranuleDEM.html#GranuleDEM.get_dem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#S2MSI.GranuleDEM.GranuleDEM.get_dem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read DEM tile from the archive</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tile</strong> &#8211; tilename, e.g. &#8220;32UPC&#8221;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">numpy array with DEM data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">S2MSI.GranuleDEM package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-S2MSI.GranuleDEM.GranuleDEM">S2MSI.GranuleDEM.GranuleDEM module</a></li>
+<li><a class="reference internal" href="#module-S2MSI.GranuleDEM">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/S2MSI.GranuleDEM.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, André Hollstein.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/S2MSI.GranuleDEM.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

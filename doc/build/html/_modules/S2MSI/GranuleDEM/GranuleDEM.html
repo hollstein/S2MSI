@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>S2MSI.GranuleDEM.GranuleDEM &mdash; S2MSI 2016.01.25 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2016.01.25',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="S2MSI 2016.01.25 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for S2MSI.GranuleDEM.GranuleDEM</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">TemporaryDirectory</span>
+<span class="kn">import</span> <span class="nn">glymur</span>
+
+<div class="viewcode-block" id="GranuleDEM"><a class="viewcode-back" href="../../../S2MSI.GranuleDEM.html#S2MSI.GranuleDEM">[docs]</a><span class="k">class</span> <span class="nc">GranuleDEM</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fn</span><span class="p">,</span><span class="n">driver</span><span class="o">=</span><span class="s">&quot;glymur&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; get digital elevation models for S2 MSI Granules from archive</span>
+
+<span class="sd">        :param fn: filename of DEM archive</span>
+<span class="sd">        :param driver: name of the method to read from the archive, currently &quot;glymur&quot; is implemented</span>
+
+<span class="sd">        :type fn: string</span>
+<span class="sd">        :type driver: string</span>
+
+<span class="sd">        :return: Dict like object which returns DEM for given granules if get_dem, [],or () are called</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fn</span> <span class="o">=</span> <span class="n">fn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zf</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">driver</span>
+
+    <span class="k">def</span> <span class="nf">_read_glymur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tile</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">tmp_dirname</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">zf</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zf</span><span class="o">.</span><span class="n">getinfo</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">.jp2&quot;</span> <span class="o">%</span> <span class="n">tile</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">tmp_dirname</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;The tile:</span><span class="si">%s</span><span class="s"> if missing in this archive. Included are: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="n">tile</span><span class="p">,</span> <span class="nb">str</span><span class="p">([</span><span class="n">bf</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;.jp2&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">bf</span> <span class="ow">in</span> <span class="n">zf</span><span class="o">.</span><span class="n">filelist</span><span class="p">])))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dat</span> <span class="o">=</span> <span class="n">glymur</span><span class="o">.</span><span class="n">Jp2k</span><span class="p">(</span><span class="n">fn</span><span class="p">)[:,</span> <span class="p">:]</span>
+                <span class="k">return</span> <span class="n">dat</span>
+
+<div class="viewcode-block" id="GranuleDEM.get_dem"><a class="viewcode-back" href="../../../S2MSI.GranuleDEM.html#S2MSI.GranuleDEM.get_dem">[docs]</a>    <span class="k">def</span> <span class="nf">get_dem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tile</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Read DEM tile from the archive</span>
+
+<span class="sd">        :param tile: tilename, e.g. &quot;32UPC&quot;</span>
+<span class="sd">        :return: numpy array with DEM data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">==</span> <span class="s">&quot;glymur&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_read_glymur</span><span class="p">(</span><span class="n">tile</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Driver:</span><span class="si">%s</span><span class="s"> not implemented.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tile</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Wrapper for get_dem &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dem</span><span class="p">(</span><span class="n">tile</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tile</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Wrapper for get_dem &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dem</span><span class="p">(</span><span class="n">tile</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, André Hollstein.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
