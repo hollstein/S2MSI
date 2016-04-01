@@ -7,7 +7,7 @@ Introduce me.
 Please run:
 
 ```
-bash ./setup.py install 
+bash ./setup.sh install 
 ```
 the usual way of executing `python setup.py install` is not recommended.
 
@@ -16,7 +16,7 @@ the usual way of executing `python setup.py install` is not recommended.
 Please run:
 
 ```
-bash ./setup.py uninstall
+bash ./setup.sh uninstall
 ```
 
 it will print some directories which you should delete manually. 
