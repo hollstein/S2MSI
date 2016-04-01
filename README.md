@@ -7,10 +7,19 @@ Introduce me.
 Please run:
 
 ```
-bash ./setup.py
+bash ./setup.py install 
 ```
-the usual way of executing `python setup.py install` is not recomended.
+the usual way of executing `python setup.py install` is not recommended.
 
+# Removal
+
+Please run:
+
+```
+bash ./setup.py uninstall
+```
+
+it will print some directories which you should delete manually. 
 
 
 # Modules 

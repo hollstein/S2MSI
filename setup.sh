@@ -61,44 +61,49 @@ END_OF_PYTHON
 cd ${curr_dir}
 }
 
-if [ "$1" = "install" ]
-then
-    # install for python above 3.5
-    py2=$(python_version)
-    if [ "$py2" = "True" ]; then
-        echo "It seems that that the Python version is wrong, above 3.5 is needed."
-        exit
-    fi
-    install
+case "$1" in
+        "install")
+        # install for python above 3.5
+        py2=$(python_version)
+        if [ "$py2" = "True" ]; then
+            echo "It seems that that the Python version is wrong, above 3.5 is needed."
+            exit
+        fi
+        install
 
-    # install for python 2.7
-    source activate ${py27env}
-    test_alright
-    py2=$(python_version)
-    if [ "$py2" = "False" ]; then
-        echo "It seems that that the Python version is wrong, above 2.7 is needed."
-        exit
-    fi
-    install
-fi
+        # install for python 2.7
+        source activate ${py27env}
+        test_alright
+        py2=$(python_version)
+        if [ "$py2" = "False" ]; then
+            echo "It seems that that the Python version is wrong, above 2.7 is needed."
+            exit
+        fi
+        install
+        ;;
+    "uninstall")
+        # uninstall for python above 3.5
+        py2=$(python_version)
+        if [ "$py2" = "True" ]; then
+            echo "It seems that that the Python version is wrong, above 3.5 is needed."
+            exit
+        fi
+        uninstall
 
-if [ "$1" = "uninstall" ]
-then
-    # uninstall for python above 3.5
-    py2=$(python_version)
-    if [ "$py2" = "True" ]; then
-        echo "It seems that that the Python version is wrong, above 3.5 is needed."
-        exit
-    fi
-    uninstall
+        # uninstall for python 2.7
+        source activate ${py27env}
+        test_alright
+        py2=$(python_version)
+        if [ "$py2" = "False" ]; then
+            echo "It seems that that the Python version is wrong, above 2.7 is needed."
+            exit
+        fi
+        uninstall
+        ;;
+    *)
+        echo "Usage: bash ./setup.sh {install|uninstall}"
+        exit 1
+        ;;
+esac
 
-    # uninstall for python 2.7
-    source activate ${py27env}
-    test_alright
-    py2=$(python_version)
-    if [ "$py2" = "False" ]; then
-        echo "It seems that that the Python version is wrong, above 2.7 is needed."
-        exit
-    fi
-    uninstall
-fi
+exit 1
