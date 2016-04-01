@@ -38,7 +38,7 @@ if PY2 is False:  # not python2
           data_files=[("data", ["S2MSI/GranuleInfo/data/S2_tile_data_lite.json",
                                 "S2MSI/GranuleInfo/data/S2_tile_data_full.json",
                                 "S2MSI/cB/data/data_cld_mask.h5",
-                                "S2MSI/cB/data/cld_mask_20160315_s2.h5",
+                                "S2MSI/cB/data/cld_mask_20160321_s2.h5",
                                 "S2MSI/Tools/data/Sentinel-2A MSI Spectral Responses.xlsx",
                                 ])],
           **kw23

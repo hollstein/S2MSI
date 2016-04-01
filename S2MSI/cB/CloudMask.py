@@ -22,7 +22,7 @@ class CloudMask(S2cB):
         logger = logger or logging.getLogger(__name__)
 
         if persistence_file is None:
-            persistence_file = "data/cld_mask_20160315_s2.h5"
+            persistence_file = "data/cld_mask_20160321_s2.h5"
             try:
                 fn = resource_filename(Requirement.parse("S2MSI"), persistence_file)
             except DistributionNotFound:
