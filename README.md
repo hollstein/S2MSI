@@ -2,6 +2,17 @@
 
 Introduce me.
 
+# Install
+
+Please run:
+
+```
+bash ./setup.py
+```
+the usual way of executing `python setup.py install` is not recomended.
+
+
+
 # Modules 
 
 ## GranuleInfo: Simple Dict like Python Object with Spatial Information about Sentinel-2 MSI Granules
