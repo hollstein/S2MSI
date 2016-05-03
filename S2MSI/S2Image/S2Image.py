@@ -166,7 +166,7 @@ class S2Image(object):
                 else:
                     raise ValueError("data_mode=%s not implemented" % data_mode)
                 t1 = time()
-                self.data[:, :, ii] = zoom(input=image_data,
+                self.data[:, :, ii] = zoom(input=np.array(image_data,dtype=np.float32),
                                            zoom=zoom_fac,
                                            order=interpolation_order)[self.sliceX,self.sliceY]
                 self.cnv[ii] = band
@@ -351,13 +351,12 @@ final shape: %s, index: %i""" % (band, t2 - t0, t1 - t0, t2 - t1, zoom_fac, str(
                     S2Image.find_in_xml(bf, *("Zenith", "Values_List"))) for bf in
                      branch.findall("Viewing_Incidence_Angles_Grids[@bandId='%i']" % bandId)} for bandId in
             metadata["bandIds"]}
-
         metadata["viewing_zenith"] = stack_detectors(metadata["viewing_zenith_detectors"])
 
         metadata["viewing_azimuth_detectors"] = {bandId: {bf.get("detectorId"): S2Image.get_values_from_xml(
                 S2Image.find_in_xml(bf, *("Azimuth", "Values_List"))) for bf in branch.findall(
                 "Viewing_Incidence_Angles_Grids[@bandId='%i']" % bandId)} for bandId in metadata["bandIds"]}
-        metadata["viewing_azimuth"] = stack_detectors(metadata["viewing_zenith_detectors"])
+        metadata["viewing_azimuth"] = stack_detectors(metadata["viewing_azimuth_detectors"])
 
         metadata["spatial_samplings"] = {
             float(size.get("resolution")): {key: int(size.find(key).text) for key in ["NROWS", "NCOLS"]} for size in

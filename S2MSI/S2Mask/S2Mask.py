@@ -111,10 +111,12 @@ class S2Mask(object):
 
     def export_confidence_to_jpeg2000(self, fn_img):
         if self.mask_confidence_array is not None:
-            self.mask_confidence_array -= np.min(self.mask_confidence_array)
-            self.mask_confidence_array /= np.max(self.mask_confidence_array)
-            self.mask_confidence_array *= 100
-            _ = glymur.Jp2k(fn_img, data=np.array(self.mask_confidence_array, dtype=np.uint8))
+
+            mask_confidence_array = np.copy(self.mask_confidence_array)
+            mask_confidence_array -= np.nanmin(mask_confidence_array)
+            mask_confidence_array /= np.nanmax(mask_confidence_array)
+            mask_confidence_array *= 100
+            _ = glymur.Jp2k(fn_img, data=np.array(mask_confidence_array, dtype=np.uint8))
 
     def export_to_jpeg200(self, fn_img, fn_metadata=None, delimiter=","):
         if fn_img is not None:
@@ -123,6 +125,11 @@ class S2Mask(object):
         if fn_metadata is not None:
             with open(fn_metadata, 'w') as outfile:
                 for key, value in sorted(self.metadata.items()):
-                    outfile.write(str(key) + delimiter + str(value) + '\n')
+                    value_str = " ".join(str(value).replace("\n","").split())
+                    if len(value_str)<100:
+                        outfile.write(str(key) + delimiter + value_str + '\n')
                 for key, value in sorted(self.geo_coding.items()):
-                    outfile.write(str(key) + delimiter + str(value) + '\n')
+                    value_str = " ".join(str(value).replace("\n","").split())
+                    if len(value_str)<100:
+                        outfile.write(str(key) + delimiter + value_str + '\n')
+

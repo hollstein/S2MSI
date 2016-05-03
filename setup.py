@@ -4,7 +4,7 @@ from six import PY2
 
 # arguments for setup which are used for python2 and beyond
 kw23 = {"name": 'S2MSI',
-        "version": '2016.01.26.6',
+        "version": '2016.05.03',
         "url": '',
         "license": 'Creative Commons Attribution-NonCommercial 4.0 International Public License',
         "author": 'Andre Hollstein',

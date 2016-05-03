@@ -151,6 +151,7 @@ def inpaint(array, sigma=None, logger=None, update_in_place=False, fill_corners=
     if interpolation_method is not None:
         for ii in range(1, np.min(shape)):
             max_good_points = np.max([np.sum(good_results[sx, sy]) for sx, sy in itt2d(shape, ii)])
+            logger.info((ii,max_good_points))
             if max_good_points < max_allowed_good_points:
                 dd_split = ii
                 break
@@ -176,7 +177,7 @@ def inpaint(array, sigma=None, logger=None, update_in_place=False, fill_corners=
                 ymm[0]:ymm[1]] = rr
 
         elif interpolation_method == "griddata":
-            if len(values) < 100:
+            if len(values) < 1:
                 pass
             else:
                 points = np.squeeze(np.dstack((xvg, yvg)))  # construct input fields for griddata

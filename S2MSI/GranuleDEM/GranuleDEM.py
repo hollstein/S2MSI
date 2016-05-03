@@ -4,15 +4,17 @@ from os.path import isdir,join,abspath,basename,dirname
 from os import remove
 from glob import glob
 import numpy as np
-from ..Tools import mkdir_p
 import h5py
 from scipy.ndimage import zoom
 import json
+import logging
+
+from ..Tools import mkdir_p
 from ..Tools import write_image_gdal, read_image_gdal
 from ..Tools.inpaint import fill_nan
 
 class GranuleDEM(object):
-    def __init__(self,fn,target_resolution=60,
+    def __init__(self,fn,target_resolution=60,logger=None,
                  sampling_to_shape={10.0: (10980, 10980), 20.0: (5490, 5490), 60.0: (1830, 1830)},
                  zoom_order=2,sliceX=slice(None),sliceY=slice(None),**kwargs):
         """ get digital elevation models for S2 MSI Granules from archive
@@ -23,6 +25,7 @@ class GranuleDEM(object):
 
         :return: Dict like object which returns DEM for given granules if get_dem, [],or () are called
         """
+        self.logger = logger or logging.getLogger(__name__)
 
         self.fn = fn
         self.ext = "tif"
@@ -145,6 +148,14 @@ class GranuleDEM(object):
                 fn = fnpat % ii
                 write_image_gdal(data=ll[ii],filename=fn)
 
-    def __call__(self,tile):
+    def __call__(self,tile,return_zeros_if_missing=False):
         """ Wrapper for get_dem """
-        return self.get_dem(tile)
+        try:
+            return self.get_dem(tile)
+        except ValueError as err:
+            if return_zeros_if_missing is True:
+                self.logger.warning(
+                        "Tile: %s missing -> return zeros since return_zeros_if_missing=True was set." % tile)
+                return np.zeros(self.sampling_to_shape[self.target_resolution],dtype=np.float16)
+            else:
+                raise err

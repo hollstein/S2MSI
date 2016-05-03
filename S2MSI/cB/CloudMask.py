@@ -39,7 +39,7 @@ class CloudMask(S2cB):
             self.persistence_file = persistence_file
 
         data = read_classical_Bayesian_persistence_file(filename=self.persistence_file)
-        cb_clf = ClassicalBayesian(mk_clf=ToClassifierDef(clf_functions=get_clf_functions(),**data["kwargs_mk_clf"]),
+        cb_clf = ClassicalBayesian(logger=logger,mk_clf=ToClassifierDef(clf_functions=get_clf_functions(),**data["kwargs_mk_clf"]),
                                    **data["kwargs_cB"])
 
         super().__init__(cb_clf=cb_clf,

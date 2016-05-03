@@ -3,8 +3,10 @@ from ..S2Mask import S2Mask
 import numpy as np
 import h5py
 import json
+from time import time
 import logging
-
+from scipy.ndimage.filters import gaussian_filter
+from scipy.ndimage.interpolation import zoom
 
 def get_clf_functions():
     """
@@ -135,7 +137,7 @@ class ToClassifierDef(_ToClassifierBase):
 
 
 class ClassicalBayesian(object):
-    def __init__(self, mk_clf, bns, hh_full, hh, hh_n, n_bins, classes, n_classes, bb_full):
+    def __init__(self, mk_clf, bns, hh_full, hh, hh_n, n_bins, classes, n_classes, bb_full,logger=None):
         """
 
         :param mk_clf:
@@ -149,7 +151,7 @@ class ClassicalBayesian(object):
         :param bb_full:
         :return:
         """
-
+        self.logger = logger or logging.getLogger(__name__)
         self.mk_clf = mk_clf
         self.bns = bns
         self.hh_full = hh_full
@@ -159,6 +161,10 @@ class ClassicalBayesian(object):
         self.classes = classes
         self.n_classes = n_classes
         self.bb_full = bb_full
+        self.zm = 0.5
+        self.gs = 0.5
+        self.ar_hh_full = {}
+        self.ar_hh = {cl:{} for cl in self.classes}
 
     def __in_bounds__(self, ids):
         ids[ids > self.n_bins - 1] = self.n_bins - 1
@@ -166,6 +172,8 @@ class ClassicalBayesian(object):
     def __predict__(self, xx):
         ids = [np.digitize(ff, bb) - 1 for ff, bb in zip(self.mk_clf(xx).transpose(), self.bb_full)]
         # ids = [c_digitize(ff, bb) - 1 for ff, bb in zip(self.mk_clf(xx).transpose(), self.bb_full)]
+
+        tt=0
 
         for ii in ids:
             self.__in_bounds__(ii)
@@ -175,6 +183,61 @@ class ClassicalBayesian(object):
             hh_full = self.hh_full[ids]
             hh_valid = hh_full > 0.0
             pp[ii, hh_valid] = hh[hh_valid] / hh_full[hh_valid] / self.n_classes
+
+            hh_invalid = hh_valid == False
+
+            t0 = time()
+            if np.sum(hh_invalid) > 0:
+                #ar_hh_full = np.copy(self.hh_full)
+                #ar_hh = np.copy(self.hh[cl])
+
+                ar_hh_full,ar_hh = None,None
+
+                iw = -1
+                while np.sum(hh_invalid) > 0:
+                    iw += 1
+
+                    #ar_hh_full = gaussian_filter(zoom(ar_hh_full,order=1,zoom=self.zm),sigma=self.gs)
+                    #"""
+                    try:
+                        ar_hh_full = self.ar_hh_full[iw]
+                    except KeyError:
+                        if ar_hh_full is None and iw == 0:
+                            ar_hh_full = np.copy(self.hh_full)
+                        self.ar_hh_full[iw] = gaussian_filter(zoom(ar_hh_full,order=1,zoom=self.zm),sigma=self.gs)
+                        ar_hh_full = self.ar_hh_full[iw]
+                    #"""
+
+                    #ar_hh = gaussian_filter(zoom(ar_hh,order=1,zoom=self.zm),self.gs)
+                    #"""
+                    try:
+                        ar_hh = self.ar_hh[cl][iw]
+                    except KeyError:
+                        if ar_hh is None and iw == 0:
+                            ar_hh = np.copy(self.hh[cl])
+                        self.ar_hh[cl][iw] = gaussian_filter(zoom(ar_hh,order=1,zoom=self.zm),self.gs)
+                        ar_hh = self.ar_hh[cl][iw]
+                    #"""
+
+                    n_bins = ar_hh_full.shape[0]
+
+                    ids_bf = [np.array(id_bf[hh_invalid] * (n_bins / self.n_bins),dtype=np.int) for id_bf in ids]
+                    for ii_bf in ids_bf:
+                        ii_bf[ii_bf > n_bins - 1] = n_bins
+
+                    hh_full = ar_hh_full[ids_bf]
+                    hh = ar_hh[ids_bf]
+                    good = hh_full != 0.0
+
+                    hh_ok = np.copy(hh_invalid)
+                    hh_ok[hh_ok == True] = good
+
+                    hh_invalid[hh_invalid == True] = np.logical_not(good)
+                    pp[ii, hh_ok] = hh[good] / hh_full[good] / self.n_classes
+                    self.logger.info("class: %s, bins: %i->%i,curr ok: %i, still bad: %i" %
+                          (str(cl),self.n_bins,n_bins,np.sum(hh_ok),np.sum(hh_invalid)))
+            tt += time() - t0
+        self.logger.info("Time spend in reduced form: %.2f" % tt)
         return pp
 
     def predict_proba(self, xx):
@@ -192,8 +255,13 @@ class ClassicalBayesian(object):
 
     def predict_and_conf(self, xx):
         proba = self.__predict__(xx.reshape((-1, xx.shape[-1]))).transpose()
-        conf = np.nan_to_num(np.max(proba, axis=1) / np.sum(proba, axis=1))
+        tot = np.sum(proba, axis=1)
+        conf = np.max(proba, axis=1) / tot
         pr = self.classes[np.argmax(proba, axis=1)]
+
+        pr[tot == 0.0] = 0.0
+        conf[tot == 0.0] = 0.0
+
         return pr.reshape(xx.shape[:-1]), conf.reshape(xx.shape[:-1])
 
 
@@ -269,29 +337,42 @@ class S2cB(object):
             self.cb_clf.mk_clf.adjust_classifier_ids(full_bands=self.cb_clf.mk_clf.id2name,
                                                      band_lists=cb_channels)
             data = S2_img.image_subsample(channels=cb_channels,target_resolution=target_resolution)
+            good_data = S2_img.nodata[target_resolution] == False
+
+            mask_shape = [S2_img.metadata["spatial_samplings"][target_resolution][ii] for ii in ["NCOLS","NROWS"]]
+            mask_array = np.zeros(mask_shape, dtype=np.float32)
+            mask_conf = np.zeros(mask_shape, dtype=np.float32)
 
             if self.processing_tiles == 0:
-                mask_array, mask_conf = self.cb_clf.predict_and_conf(data)
+                mask_array[good_data], mask_conf[good_data] = self.cb_clf.predict_and_conf(data[good_data,:])
             else:
-                mask_shape = [S2_img.metadata["spatial_samplings"][target_resolution][ii] for ii in ["NCOLS","NROWS"]]
-                mask_array = np.zeros(mask_shape, dtype=np.float32)
-                mask_conf = np.zeros(mask_shape, dtype=np.float32)
                 line_segs = np.linspace(0, mask_shape[0], self.processing_tiles, dtype=np.int)
                 for ii, (i1, i2) in enumerate(zip(line_segs[:-1], line_segs[1:])):
                     self.logger.info("Processing lines segment %i of %i -> %i:%i" %
                                      (ii + 1, self.processing_tiles, i1, i2))
-                    mask_array[i1:i2, :], mask_conf[i1:i2, :] = self.cb_clf.predict_and_conf(data[i1:i2,:,:])
 
-                    number_of_nans = np.sum(np.isnan(data[i1:i2,:,:]),axis=2)
-                    badv = number_of_nans > 0
-                    nodata = number_of_nans == data.shape[2]
-                    mask_array[i1:i2, :][badv] = -1 * number_of_nans[badv]
-                    mask_array[i1:i2, :][nodata] = np.NaN
+
+                    ma,mc = self.cb_clf.predict_and_conf(data[i1:i2,:,:][good_data[i1:i2,:],:])
+                    maf = np.zeros(good_data[i1:i2,:].shape,dtype=np.float32)
+                    mcf = np.zeros(good_data[i1:i2,:].shape,dtype=np.float32)
+                    maf[good_data[i1:i2,:]],mcf[good_data[i1:i2,:]] = ma,mc
+                    mask_array[i1:i2, :], mask_conf[i1:i2, :] = maf,mcf
+
+
+                    #mask_array[i1:i2, :], mask_conf[i1:i2, :] = self.cb_clf.predict_and_conf(data[i1:i2,:,:])
+
+
+                    #number_of_nans = np.sum(np.isnan(data[i1:i2,:,:]),axis=2)
+                    #badv = number_of_nans > 0
+                    #nodata = number_of_nans == data.shape[2]
+                    #mask_array[i1:i2, :][badv] = -1 * number_of_nans[badv]
+                    #mask_array[i1:i2, :][nodata] = np.NaN
 
             gc = S2_img.metadata["spatial_samplings"][target_resolution] if target_resolution is not None else None
             return S2Mask(S2_img=S2_img, mask_array=mask_array,clf_to_col=self.clf_to_col,
                           mask_legend=self.mask_legend, mask_confidence_array=mask_conf,
                           geo_coding=gc)
+
         else:
             if target_resolution is not None:
                 raise ValueError("target_resolution should only be given if target_resolution=None for the S2 image.")
